@@ -1,3 +1,6 @@
+# temp file
+*.c~
+
 # Object files
 *.o
 
