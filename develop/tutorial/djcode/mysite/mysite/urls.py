@@ -1,4 +1,4 @@
-    from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, include, url
 from mysite.views import hello
 from mysite.views import current_datetime
 from mysite.views import hours_ahead
