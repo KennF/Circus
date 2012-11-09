@@ -12,9 +12,19 @@ then
   cd ./framework/webpy
   git pull
 else 
-  mkdir ./framework/webpy/
-  cd ./framework/webpy/
+  cd ./framework/
   git clone https://github.com/webpy/webpy.git
+fi
+
+# sync flask
+if [ -d "./framework/flask/" ]
+then
+  echo "./framework/flask/ exists"
+  cd ./framework/webpy
+  git pull
+else 
+  cd ./framework/
+  git clone https://github.com/mitsuhiko/flask.git
 fi
 # sync flask
 # sync django
