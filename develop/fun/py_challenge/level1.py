@@ -18,4 +18,4 @@ url = "pc/def/map.html"
 trans_table = string.maketrans("abcdefghijklmnopqrstuvwxyz", "cdefghijklmnopqrstuvwxyzab")
 print input.translate(trans_table)
 print url.translate(trans_table)
-
+print "url is www.pythonchallenge.com/pc/def/ocr.html"
