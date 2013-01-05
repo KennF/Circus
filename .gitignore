@@ -1,3 +1,4 @@
-env/
+develop/env/
+develop/framework/
 .DS_Store
 *.*~

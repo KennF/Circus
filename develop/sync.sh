@@ -26,5 +26,14 @@ else
   cd ./framework/
   git clone https://github.com/mitsuhiko/flask.git
 fi
-# sync flask
+# sync qunit
+if [ -d "./framework/qunit/" ]
+then
+  echo "./framework/qunit/ exists"
+  cd ./framework/qunit
+  git pull
+else
+  cd ./framework/
+  git clone https://github.com/jquery/qunit
+fi
 # sync django
