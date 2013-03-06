@@ -2,3 +2,4 @@ develop/env/
 develop/framework/
 .DS_Store
 *.*~
+*.pyc
