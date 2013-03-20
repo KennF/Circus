@@ -26,5 +26,6 @@ while True:
 print f.comment
 f.close()
 print "".join(history)
+print "the url is http://www.pythonchallenge.com/pc/def/oxygen.html"
 
 
