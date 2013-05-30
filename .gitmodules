@@ -1,0 +1,6 @@
+[submodule "framework/jquery"]
+	path = framework/jquery
+	url = https://github.com/jquery/jquery.git
+[submodule "framework/flask"]
+	path = framework/flask
+	url = https://github.com/mitsuhiko/flask.git
