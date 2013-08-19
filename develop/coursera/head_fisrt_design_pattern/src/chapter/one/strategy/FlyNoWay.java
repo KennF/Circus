@@ -1,10 +1,9 @@
-package com.mypackage;
+package chapter.one.strategy;
 
 public class FlyNoWay implements FlyBehavior {
 
 	@Override
 	public void Fly() {
-		// TODO Auto-generated method stub
 		System.out.println("I can't fly");
 
 	}

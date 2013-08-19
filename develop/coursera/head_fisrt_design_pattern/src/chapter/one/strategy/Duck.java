@@ -1,23 +1,22 @@
-package com.mypackage;
+package chapter.one.strategy;
 
 public class Duck {
 	FlyBehavior flyBehavior;
 	QuackBehavior quackBehavior;
-	public Duck(){
-		
+
+	public Duck() {
+
 	}
-	
+
 	public void display() {
 		System.out.print("I'm Duck");
 	}
-	
-	public void performFly()
-	{
+
+	public void performFly() {
 		flyBehavior.Fly();
 	}
-	
-	public void performQuack()
-	{
+
+	public void performQuack() {
 		quackBehavior.Quack();
 	}
 
