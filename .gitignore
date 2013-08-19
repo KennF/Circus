@@ -3,3 +3,4 @@ develop/framework/
 .DS_Store
 *.*~
 *.pyc
+*.class
