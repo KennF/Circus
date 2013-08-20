@@ -1,16 +1,30 @@
-import Image
+from PIL import Image
+import os
+
+EVEN_JPG = "even.jpg"
+ODD_JPG = "odd.jpg"
 
 image = Image.open('cave.jpg')
-odd = Image.new('RGB', image.size)
-even = Image.new('RGB', image.size)
 print image.format, image.mode, image.size
 
-print image.getbands()
+if os.path.exists(EVEN_JPG):
+	os.remove(EVEN_JPG)
+if os.path.exists(ODD_JPG):
+	os.remove(ODD_JPG)
 
-for x in range(image.size[0], 2):
-	for y in range(image.size[1], 2):
-		even.putpixel((x, y),image.getpixel((x, y)))
-		odd.putpixel((x+1, y+1), image.getpixel(x+1, y+1))
+img = Image.open('cave.jpg')
+even = Image.new('RGB',img.size)
+odd = Image.new('RGB',img.size)
 
-even.save("even.jpg")
-odd.save("odd.jpg")
+for x in range(0,img.size[0],2):
+    for y in range(0,img.size[1],2):
+        even.putpixel((x,y),img.getpixel((x,y)))
+        odd.putpixel((x+1,y+1),img.getpixel((x+1,y+1)))
+
+even = even.resize((img.size[0]/2,img.size[1]/2))
+odd = odd.resize((img.size[0]/2,img.size[1]/2))
+
+even.save(EVEN_JPG)
+odd.save(ODD_JPG)
+
+print "next url is http://www.pythonchallenge.com/pc/return/evil.html"
