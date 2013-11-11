@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 class Category(models.Model):
     name = models.CharField(max_length=123, unique=True)
@@ -16,6 +18,22 @@ class Page(models.Model):
 
     def __unicode__(self):
         return self.title
+
+class UserProfile(models.Model):
+    class Meta:
+        verbose_name = ('UserProfile')
+        verbose_name_plural = ('UserProfiles')
+
+    user = models.OneToOneField(User)
+    website = models.URLField(blank=True)
+    picture = models.ImageField(upload_to='profile_image', blank=True)
+
+    def __unicode__(self):
+        return self.user.username
+
+
+
+
 
 
 
