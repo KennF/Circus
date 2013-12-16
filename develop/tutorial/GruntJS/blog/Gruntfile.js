@@ -10,4 +10,7 @@ module.exports = function(grunt){
 
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.registerTask('default', ['uglify']);
+    grunt.registerTask('test', 'log some stuff', function(){
+        grunt.log.write('Log some stuff...').ok();
+    });
 };
