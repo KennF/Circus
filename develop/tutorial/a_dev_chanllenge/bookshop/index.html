@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+    <title>Bookshop - your online bookshop</title>
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css"
+</head>
+<body>
+
+    <div class="container" ng-init="books=[{'name': 'Effective Java', 'author':'Joshua Bloch'},{'name': 'Year without Pants', 'author':'Scott Berkun'},{ 'name':'Confessions of public speaker','author':'Scott Berkun'},{'name':'JavaScript Good Parts','author':'Douglas Crockford'}]">
+        <h2>Your online bookshop</h2>
+        <ul class="unstyled">
+            <li ng-repeat="book in books">
+                {{book}}
+            </li>
+        </ul>
+        <ul class="unstyled">
+            <li ng-repeat="book in books | orderBy :'name'">
+                    <span>{{book.name}} written by {{book.author | uppercase}}</span>
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+</body>
+</html>
