@@ -1,0 +1,11 @@
+{% extends "index.html" %}
+{% block summary %}
+  <table>
+  {% for entry in entries %}
+    <tr>
+      <td>{{ entry.title }}</td>
+      <td>{{ entry.text }}</td>
+    </tr>
+  {% endfor %}
+  </table>
+{% endblock %}
