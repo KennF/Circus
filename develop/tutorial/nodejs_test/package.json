@@ -1,0 +1,14 @@
+{
+    "name": "nodejs_test",
+    "description": "test project to play with mocha",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "express": "3.x"
+    },
+    "devDependencies": {
+        "mocha": "~1.16.2",
+        "mocha-teamcity-reporter": ">=0.0.1",
+        "grunt": "~0.4.2"
+    }
+}
