@@ -1,0 +1,13 @@
+{
+    "name": "algorithm review",
+    "version": "0.0.1",
+    "description": "A algorithm review",
+    "keywords": ["test"  "algorithm"],
+    "author": "Kennf",
+    "scripts": {
+    "test": "make test"
+  },
+    "devDependencies": {
+    "mocha": "0.3.x"
+  }
+}
