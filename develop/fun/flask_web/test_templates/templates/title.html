@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %} Index {% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    {{ moment.lang('es') }}
+{% endblock %}
+
+{% block body %} 
+    {{ super() }}
+    <p>The local date and time is {{ moment(current_time).format('L') }}.</p>
+    <p>That was {{ moment(current_time).fromNow(refresh=True) }}</p>
+{% endblock %}

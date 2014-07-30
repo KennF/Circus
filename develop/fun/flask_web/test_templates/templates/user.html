@@ -1,0 +1,19 @@
+{% import 'macros.html' as macros %}
+
+<h2>Hello {{ name }}</h2>
+{{ check_safe|safe }}
+<h2>{{ check_unsafe }}</h2>
+
+{% if user %}
+    hello {{ name }}
+{% else %}
+    hello stranger <br/>
+{% endif %}
+
+{% include 'common.html' %}
+<ul>
+{% for comment in comments %}
+    {{ macros.render_comment(comment) }}
+{% endfor %}
+</ul>
+{% include 'common.html' %}
