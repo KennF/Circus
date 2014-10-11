@@ -1,54 +1,122 @@
-var http = require('http');
-var fs = require('fs');
-var path = require('path');
-var mime = require('mime');
-var cache = {};
+var socketio = require('socket.io');
+var io;
+var guestNumber = 1;
+var nickNames = {};
+var namesUsed = [];
+var currentRoom = {};
 
-function send404 (response) {
-    response.writeHead(404, {'Content-Type': 'text/plain'});
-    response.write('Error 404: resource not found.');
-    response.end();
-}
-
-function sendFile (response, filePath, fileContents) {
-    response.writeHead(
-        200,
-        {'Content-Type': mime.lookup(path.basename(filePath))}
-        );
-    response.end(fileContents);
-}
-
-function serverStatic (response, cache, absPath) {
-    if(cache[absPath]) {
-        sendFile(response, absPath, cache[absPath])
-    } else {
-        fs.exists(absPath, function (argument) {
-            if(exists) {
-                fs.readFile(absPath, function(err, data){
-                    if(err) {
-                        send404(response);
-                    } else {
-                        cache[absPath] = data;
-                        sendFile(response, absPath, data);
-                    }
-                });
-            } else {
-                send404(response);
-            }
+exports.listen = function (server) {
+    io = socketio.listen(server);
+    io.set('log level', 1);
+    io.sockets.on('connection', function (socket) {
+        guestNumber = assignGuestName(socket, guestNumber, nickNames, namesUsed);
+        joinRoom(socket, 'Lobby');
+        handleNameChangeAttempts(socket, nickNames, namesUsed)
+        handleMessageBroadcastging(socket, nickNames);
+        handleRoomJoining(socket);
+        socket.on('rooms', function () {
+            socket.emit('rooms', io.sockets.manager.rooms);
         });
+        handleClientDisconnection(socket, nickNames, namesUsed);
+
+    });
+};
+
+function assignGuestName (socket, guestNumber, nickNames, namesUsed) {
+    var name = 'Guest' + guestNumber;
+    nickNames[socket.id] = name;
+    socket.emit('nameResult', {
+        success: true,
+        name: name
+    });
+    namesUsed.push(name);
+    return guestNumber + 1;   
+}
+
+function joinRoom(socket, room) {
+    socket.join(room);
+    currentRoom[socket.id] = room;
+    socket.emit('joinResult', { room: room });
+    socket.broadcast.to(room).emit('message', {
+        text: nickNames[socket.id] + ' has joined ' + room + '.'
+    });
+    var usersInRoom = io.sockets.clients(room);
+    if (usersInRoom.length > 1) {
+        var usersInRoomSummery = 'Users currently in ' + room + ': ';
+        for (var index in usersInRoom) {
+            var userSocketId = usersInRoom[index].id;
+            if (userSocketId != socket.id) {
+                if (index > 0) {
+                    usersInRoomSummery += ', ';
+                }
+                usersInRoomSummery += nickNames[userSocketId];
+            }
+        }
+        usersInRoomSummery += '.';
+        socket.emit('message', { text: usersInRoomSummery });
+
     }
 }
 
-var server = http.createServer(function (request, response) {
-    var filePath = false;
+function handleNameChangeAttempts(socket, nickNames, namesUsed) {
+    socket.on('nameAttempt', function (name) {
+        if (name.indexOf('Guest') == 0) {
+            socket.emit('nameResult', {
+                success: false,
+                message: 'Names cannot begin with "Guest".'
+            });
+        } else {
+            if (namesUsed.indexOf(name) == -1) {
+                var previousName = nickNames[socket.id];
+                var previousNameIndex = namesUsed.indexOf[previousName];
+                namesUsed.push(name);
+                nickNames[socket.id] = name;
+                delete namesUsed[previousNameIndex];
 
-    if(request.url == '/') {
-        filePath = 'public/index.html';
-    } else {
-        filePath = 'public' + request.url;
-    }
+                socket.emit('nameResult', {
+                    success: true,
+                    name: name
+                });
+                socket.broadcast.to(currentRoom[socket.id]).emit('message', {
+                    text: previousName + ' is now known as ' + name + '.'
+                });
 
-    var absPath = './' + filePath;
-    serverStatic(response, cache, absPath);
-});
+            } else {
+                socket.emit('nameResult', {
+                    success:false,
+                    message: 'That name is already in use.'
+                });
+            }
+        }
+    });
+}
+
+function handleMessageBroadcastging (socket, nickNames) {
+    socket.on('message', function (message) {
+        socket.broadcast.to(message.room).emit('message', {
+            text: nickNames[socket.id] + ': '+ message.text
+        });
+    });
+}
+
+function handleRoomJoining(socket) {
+    socket.on('join', function (room) {
+        socket.leave(currentRoom[socket.id]);
+        joinRoom(socket, room.newRoom);
+    });
+}
+
+function handleClientDisconnection(socket) {
+    socket.on('disconnect', function(){
+        var nameIndex = namesUsed.indexOf(nickNames[socket.id]);
+        delete namesUsed[nameIndex];
+        delete nickNames[socket.id];
+    });
+}
+
+
+
+
+
+
 
