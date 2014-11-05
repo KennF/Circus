@@ -4,3 +4,4 @@ develop/framework/
 *.*~
 *.pyc
 *.class
+node_modules/
