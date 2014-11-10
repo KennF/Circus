@@ -1,0 +1,13 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.ken.www</groupId>
+    <artifactId>mvn-demo</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0</version>
+    <name>Maven Demo</name>
+    
+    <modules>
+        <module>maven_demo</module>
+        <module>webapp</module>
+    </modules>
+</project>
