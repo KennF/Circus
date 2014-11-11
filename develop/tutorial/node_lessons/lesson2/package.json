@@ -1,0 +1,15 @@
+{
+  "name": "lesson2",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "KennF",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.10.1",
+    "utility": "^1.2.0"
+  }
+}
