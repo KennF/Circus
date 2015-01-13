@@ -2,8 +2,12 @@ import os
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.script import Manager
+from flask.ext.wtf import Form
+from wtforms import StringField, SubmitField
+from wtforms.validators import Required
 
 app = Flask(__name__)
+
 manager = Manager(app)
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -12,6 +16,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = \
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 
 db = SQLAlchemy(app)
+
+class NameForm(Form):
+    name = StringField(label='What\'s your name?', validators=[ Required() ])
+    submit = SubmitField(label='Submit')
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -28,10 +36,11 @@ class Role(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
-    users = db.relationship('User', backref='role')
+    users = db.relationship('User', backref='role', lazy='dynamic')
     
     def __repr__(self):
         return '<Role %r>' % self.name
+@app.route('/', )
 
 if __name__ == '__main__':
     manager.run()

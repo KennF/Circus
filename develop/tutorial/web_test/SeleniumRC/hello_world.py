@@ -9,8 +9,6 @@ class NewTest(unittest.TestCase):
                 "http://www.google.com.hk/")
         self.selenium.start()
 
-
-
     def test_new(self):
         sel = self.selenium
         sel.open("/")
