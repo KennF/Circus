@@ -18,8 +18,7 @@ def two_sum(numbers, target):
 			return (map[target - numbers[i]]+1, i+1)
 		else:
 			map[numbers[i]] = i
-	
+
 
 if __name__ == '__main__':
 	print two_sum(numbers, target)
-			
