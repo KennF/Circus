@@ -1,0 +1,17 @@
+// apply plugin: 'java'
+
+// /**
+//  * Repositories
+//  * @see http://www.gradle.org/docs/current/userguide/userguide_single.html#sec:repositories
+//  */
+// repositories {
+//     mavenCentral()
+// }
+
+/**
+ * Declare dependencies
+ * @see http://www.gradle.org/docs/current/userguide/userguide_single.html#sec:how_to_declare_your_dependencies
+ */
+dependencies {
+    testCompile 'junit:junit:4.12'
+}
