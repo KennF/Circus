@@ -20,6 +20,15 @@ task hihi
 hihi {
     println "hihi"
 }
+// task configuration and execution phases
+
+task initializeDatabase
+// the below two lines are exectuion
+initializeDatabase << { println 'connect to database' }
+initializeDatabase << { println 'update database schema' }
+// the below two lines are configuration
+initializeDatabase { print 'configuring ' }
+initializeDatabase { println 'database connection' }
 
 // dependencies
 
