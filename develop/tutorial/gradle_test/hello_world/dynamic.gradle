@@ -1,0 +1,7 @@
+task copyFiles {
+    ext.fileManifest = ['data.csv', 'config.json']
+}
+
+task createArtifacts(dependsOn: copyFiles) << {
+    println "FILES IN MANIFEST: ${copyFiles.fileManifest}"
+}

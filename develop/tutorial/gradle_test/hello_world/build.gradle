@@ -1,0 +1,88 @@
+task hello << {
+    print 'hello, '    
+}
+
+task world(dependsOn: hello) << {
+    print 'world!'
+}
+
+task hi
+
+hi << {
+    print 'hello1, '
+}
+hi << {
+    println 'hello2'
+}
+
+task hihi
+
+hihi {
+    println "hihi"
+}
+
+// dependencies
+
+task createSchema << {
+    println "create schema"
+}
+
+task compileTestClasses << {
+    println "compile test classes"
+}
+
+task loadTestData {
+    dependsOn createSchema
+}
+
+task loadTestData1 {
+    dependsOn 'createSchema'
+}
+
+task loadTestData2 {
+    dependsOn << createSchema
+}
+
+task loadTestData3(dependsOn: createSchema) {
+    
+}
+
+task test {
+    dependsOn createSchema, compileTestClasses
+}
+
+task test1(dependsOn: [createSchema, compileTestClasses])
+
+task test2
+test2.dependsOn createSchema, compileTestClasses
+
+// doFirst
+
+task setupDatabaseTests << {
+    println 'load test data'
+}
+
+setupDatabaseTests {
+    doFirst {
+        println 'create database schema'
+    }
+}
+
+setupDatabaseTests.doFirst {
+    println 'drop database schema'
+}
+
+// onlyIf
+task loadTest(dependsOn: createSchema) << {
+    print 'load test'
+}
+
+loadTest.onlyIf {
+    System.properties['load.data'] == 'true'
+}
+
+
+
+
+
+
